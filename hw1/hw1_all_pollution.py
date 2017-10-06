@@ -9,6 +9,8 @@ print('data reading and model building...')
 data = pd.read_csv('train.csv', encoding='big5')
 x = np.empty((0, 18*9), float)
 y = []
+x_va = np.empty((0, 18*9), float)
+y_va = []
 for day in range(num_day):
     for h in range(num_hour):
         if data[str(h)][10+day*18] == 'NR':
@@ -18,40 +20,31 @@ for day in range(num_day):
         xi = np.array([])
         for idx in range(1, 10):
             xi = np.concatenate((xi, data[str(hour+idx)][day*18:day*18+18]), axis=0)
-        x = np.vstack((x, xi))        
-        y.append(data[str(hour+idx)][9+day*18])
-        #print(data[str(hour+idx)][day*18+9])
-y = np.array(y)
-#print(x)
-#print(x[0])
-# print(y)
-# print(y.shape)
-# print(x.shape)
+        if day < num_day*3/4:
+            x = np.vstack((x, xi))        
+            y.append(data[str(hour+9)][9+day*18])
+        else:
+            x_va = np.vstack((x_va, xi))        
+            y_va.append(data[str(hour+9)][9+day*18])
 
-b = np.zeros(num_day*(num_hour-9), )
+
+b = np.zeros(int(num_day*(num_hour-9)*3/4), )
 w = np.random.rand(18*9, )
-# w = np.ones((18*9, 1)
-# w /= 18*9
-# print(b)
-# print(w)
 
 print('training...')
-iter_num = 50000
+iter_num = 100000
 lr = 0.01
 lr_w = np.random.rand(18*9,)
 lr_b = 0.
 loss_history = []
 
-# print(x.shape, w.shape, b.shape)
 x = np.array(x, dtype=float)
 y = np.array(y, dtype=float)
-# print(x.dtype, y.dtype, w.dtype, b.dtype)
 
 for it in range(iter_num):
     y_hat = np.dot(x, w)+b
-    # diff = np.subtract(y_hat, y)
     diff = y_hat-y
-    loss = np.sum(np.square(diff))
+    loss = np.sqrt(np.mean(np.square(diff)))
     b_grad = 2*np.sum(diff)
     w_grad = 2*np.dot(x.T, diff)
 
@@ -60,11 +53,20 @@ for it in range(iter_num):
 
     w = w - lr*w_grad/np.sqrt(lr_w/(it+1))
     b = b - lr*b_grad/np.sqrt(lr_b/(it+1))
-    # w = w - lr*w_grad
-    # b = b - lr*b_grad
+    #w = w - lr*w_grad
+    #b = b - lr*b_grad
 
-    # print(loss)
     loss_history.append(loss)
+
+print('validating...')
+x_va = np.array(x_va, dtype=float)
+y_va = np.array(y_va, dtype=float)
+#b = b[:int(num_day*(num_hour-9)/4)]
+b_va = b[:900]
+y_hat = np.dot(x_va, w)+b_va
+diff_va = y_hat-y_va
+loss_va = np.sqrt(np.mean(np.square(diff_va)))
+print('validation loss: ', loss_va)
 
 b_val = b[0]
 print('generating answers...')
@@ -95,9 +97,9 @@ for day in range(int(num_day)):
 # print(y_ans)
 ans_np = np.array([id_array, y_ans])
 ans_dataframe = pd.DataFrame(ans_np.T)
-ans_dataframe.to_csv('ans.csv', index=False, header=['id','value'])
+ans_dataframe.to_csv('ans_all_pollution.csv', index=False, header=['id','value'])
 
-print(loss_history)
+print(loss_history[-10:-1])
 plt.plot(loss_history)
 plt.yscale('log')
 plt.show()
