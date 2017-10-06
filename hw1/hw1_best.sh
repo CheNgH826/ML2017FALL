@@ -1,1 +1,1 @@
-python testing.py $1 $2
+python test_best.py $1 $2
