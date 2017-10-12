@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import sys
 
 num_day=240
@@ -107,6 +107,6 @@ ans_dataframe = pd.DataFrame(ans_np.T)
 ans_dataframe.to_csv(sys.argv[1], index=False, header=['id','value'])
 
 print(loss_history[-10:])
-plt.plot(loss_history)
-plt.yscale('log')
-plt.show()
+#plt.plot(loss_history)
+#plt.yscale('log')
+#plt.show()
