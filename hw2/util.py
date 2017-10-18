@@ -7,7 +7,7 @@ def standardize(matrix): # matrix.shape = (m, n)
     return (matrix-avg)/std
 
 def cross_entropy(p,q):
-    return -(p*np.log(q)+(1-p)*np.log(1-q))
+    return -(p*np.log(q)+(1-p)*np.log(1-q)).astype(float)
 
 def sigmoid(x):
     return 1/(1+np.exp(-x))
