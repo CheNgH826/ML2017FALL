@@ -4,7 +4,7 @@ from util import *
 
 x_test = pd.read_csv('data/proc_x_test')
 x_test = np.concatenate((x_test, np.ones((x_test.shape[0],1))), axis=1)
-w = pd.read_csv('paras/logistic_para')
+w = pd.read_csv('para/logistic_para')
 
 f = sigmoid(np.dot(x_test, w))
 ans = np.array(determine_ans(f))

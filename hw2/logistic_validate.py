@@ -4,7 +4,7 @@ from util import *
 
 x_va = np.array(pd.read_csv('data/proc_x_va'))
 y_va = np.array(pd.read_csv('data/proc_y_va'))
-w = pd.read_csv('paras/logistic_para')
+w = pd.read_csv('para/logistic_para')
 x_va = np.concatenate((x_va, np.ones((x_va.shape[0],1))), axis=1)
 
 f = sigmoid(np.dot(x_va, w))
