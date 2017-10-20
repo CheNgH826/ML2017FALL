@@ -54,4 +54,4 @@ para1 = np.concatenate((w1, [b1]), axis=0)
 para = np.concatenate((para0.reshape(-1,1), para1.reshape(-1,1)), axis=1)
 # print(para.shape)
 
-pd.DataFrame(para).to_csv('paras/generative_para', index=False)
+pd.DataFrame(para).to_csv('para/generative_para', index=False)
