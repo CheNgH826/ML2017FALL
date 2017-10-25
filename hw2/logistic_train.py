@@ -10,7 +10,7 @@ y_train = np.array(pd.read_csv('data/proc_y_train'))
 x_train = np.concatenate((x_train, np.ones((x_train.shape[0],1))), axis=1)
 
 iter_num = 10000
-lr = 5e-3
+lr = 1e-3
 w = np.zeros((x_train.shape[1],1))
 grad_accu = 0
 

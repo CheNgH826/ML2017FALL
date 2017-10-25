@@ -11,9 +11,15 @@ clf.fit(x_train, y_train)
 print(clf.score(x_train, y_train))
 x_va = np.array(pd.read_csv('data/proc_x_va'))
 y_va = np.array(pd.read_csv('data/proc_y_va'))
-print(clf.score(x_va, y_va))
-x_test = np.array(pd.read_csv('data/proc_x_test'))
-ans = clf.predict(x_test)
-ans = np.vstack((np.arange(1,len(ans)+1), ans)).T
-joblib.dump(clf, 'para/RandomForestClf.pkl')
-pd.DataFrame(ans).to_csv('ans/RandomForestClf_ans',index=False,header=['id','label'])
+score_his = []
+for i in range(20):
+    clf.fit(x_train, y_train)
+    print(clf.score(x_va, y_va))
+    score_his.append(clf.score(x_va, y_va))
+print(np.mean(score_his))
+
+# x_test = np.array(pd.read_csv('data/proc_x_test'))
+# ans = clf.predict(x_test)
+# ans = np.vstack((np.arange(1,len(ans)+1), ans)).T
+# joblib.dump(clf, 'para/RandomForestClf.pkl')
+# pd.DataFrame(ans).to_csv('ans/RandomForestClf_ans',index=False,header=['id','label'])
