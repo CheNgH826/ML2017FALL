@@ -7,8 +7,8 @@ import pandas as pd
 clf = joblib.load('para/RandomForestClf.pkl')
 # x_test = np.array(pd.read_csv('data/proc_x_test'))
 # x_test = pd.read_csv('data/X_test')
-for i in range(3):
-    print(sys.argv[i])
+# for i in range(3):
+    # print(sys.argv[i])
 x_test = pd.read_csv(sys.argv[1])
 norm_para = np.array(pd.read_csv('para/norm_para'))
 x_analog, x_digital = np.split(x_test.T,[6])
