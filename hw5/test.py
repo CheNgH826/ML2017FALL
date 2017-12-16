@@ -7,7 +7,7 @@ import sys
 TESTING_FILE = sys.argv[1]
 MODEL_FILE = sys.argv[2]
 ANS_FILE = sys.argv[3]
-normalize = False
+normalize = True
 
 with open('mean_std', 'r') as f:
     mean = float(f.readline())
