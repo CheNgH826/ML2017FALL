@@ -14,7 +14,7 @@ def img_norm(A):
     M = (M*255).astype(np.uint8)
     return M
 
-IMAGE_PATH = os.path.abspath('.')+'/'+sys.argv[1]
+IMAGE_PATH = os.path.abspath('.')+'/'+sys.argv[1]+'/'
 filelist = os.listdir(IMAGE_PATH)
 img_shape = imread(IMAGE_PATH+filelist[0]).shape
 img_npy_name = 'img_data.npy'
